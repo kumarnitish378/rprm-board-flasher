@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Build output. NOTE: build/ itself is source - it holds the PyInstaller spec,
+# the icon generator, the packaging script and the operator docs. Only the
+# intermediate work directory and the finished bundle are ignored.
+build/.work/
+dist/
+
+# Written at runtime beside the program
+logs/
+settings.json

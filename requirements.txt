@@ -1,0 +1,10 @@
+pyserial>=3.5
+
+# GUI (M2)
+PySide6>=6.7
+
+# Build (M4)
+pyinstaller>=6.6
+
+# Tests
+pytest>=8.0

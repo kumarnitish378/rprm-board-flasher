@@ -1,0 +1,260 @@
+{
+  "family": "avr",
+  "_comment": [
+    "Board profiles are data, not code. To add a board, copy an entry and edit it,",
+    "then restart the tool. 'chip' is an avrdude part id (run: avrdude -p ? for the",
+    "full list of 172). 'signature' is what the chip reports when detected.",
+    "",
+    "Modes:",
+    "  isp_uno        - an UNO running ArduinoISP drives the target over SPI.",
+    "                   The port is the UNO's, not the target's. Chip-erases,",
+    "                   which destroys the target's bootloader.",
+    "  usb_bootloader - the target's own bootloader receives the firmware over",
+    "                   its USB port. Leaves the bootloader intact."
+  ],
+
+  "boards": [
+    {
+      "id": "mega2560",
+      "name": "Arduino Mega 2560",
+      "chip": "atmega2560",
+      "signature": "0x1e9801",
+      "flash_bytes": 262144,
+      "notes": "8 KB of flash is reserved for the bootloader when one is present.",
+      "modes": {
+        "isp_uno": {
+          "label": "UNO as ISP programmer",
+          "description": "Flash through an Arduino UNO running the ArduinoISP sketch.",
+          "erases_bootloader": true,
+          "port_belongs_to": "programmer",
+          "options": { "programmer": "stk500v1", "baud": 19200, "chip_erase": true }
+        },
+        "usb_bootloader": {
+          "label": "Direct USB (bootloader)",
+          "description": "Flash over the Mega's own USB cable. Needs a working bootloader.",
+          "port_belongs_to": "target",
+          "options": { "programmer": "wiring", "baud": 115200, "extra": ["-D"] }
+        }
+      },
+      "wiring": {
+        "isp_uno": [
+          ["D10", "RESET"],
+          ["D11 (MOSI)", "D51"],
+          ["D12 (MISO)", "D50"],
+          ["D13 (SCK)", "D52"],
+          ["5V", "5V"],
+          ["GND", "GND"]
+        ]
+      }
+    },
+
+    {
+      "id": "mega1280",
+      "name": "Arduino Mega 1280",
+      "chip": "atmega1280",
+      "signature": "0x1e9703",
+      "flash_bytes": 131072,
+      "modes": {
+        "isp_uno": {
+          "label": "UNO as ISP programmer",
+          "erases_bootloader": true,
+          "port_belongs_to": "programmer",
+          "options": { "programmer": "stk500v1", "baud": 19200, "chip_erase": true }
+        },
+        "usb_bootloader": {
+          "label": "Direct USB (bootloader)",
+          "options": { "programmer": "arduino", "baud": 57600, "extra": ["-D"] }
+        }
+      },
+      "wiring": {
+        "isp_uno": [
+          ["D10", "RESET"],
+          ["D11 (MOSI)", "D51"],
+          ["D12 (MISO)", "D50"],
+          ["D13 (SCK)", "D52"],
+          ["5V", "5V"],
+          ["GND", "GND"]
+        ]
+      }
+    },
+
+    {
+      "id": "uno",
+      "name": "Arduino UNO",
+      "chip": "atmega328p",
+      "signature": "0x1e950f",
+      "flash_bytes": 32768,
+      "modes": {
+        "isp_uno": {
+          "label": "UNO as ISP programmer",
+          "erases_bootloader": true,
+          "port_belongs_to": "programmer",
+          "options": { "programmer": "stk500v1", "baud": 19200, "chip_erase": true }
+        },
+        "usb_bootloader": {
+          "label": "Direct USB (bootloader)",
+          "options": { "programmer": "arduino", "baud": 115200, "extra": ["-D"] }
+        }
+      },
+      "wiring": {
+        "isp_uno": [
+          ["D10", "RESET"],
+          ["D11 (MOSI)", "D11"],
+          ["D12 (MISO)", "D12"],
+          ["D13 (SCK)", "D13"],
+          ["5V", "5V"],
+          ["GND", "GND"]
+        ]
+      }
+    },
+
+    {
+      "id": "nano",
+      "name": "Arduino Nano (new bootloader)",
+      "chip": "atmega328p",
+      "signature": "0x1e950f",
+      "flash_bytes": 32768,
+      "notes": "Clones sold after 2018 usually take 115200. If upload fails with a sync error, try the old-bootloader profile.",
+      "modes": {
+        "isp_uno": {
+          "label": "UNO as ISP programmer",
+          "erases_bootloader": true,
+          "port_belongs_to": "programmer",
+          "options": { "programmer": "stk500v1", "baud": 19200, "chip_erase": true }
+        },
+        "usb_bootloader": {
+          "label": "Direct USB (bootloader)",
+          "options": { "programmer": "arduino", "baud": 115200, "extra": ["-D"] }
+        }
+      },
+      "wiring": {
+        "isp_uno": [
+          ["D10", "RESET"],
+          ["D11 (MOSI)", "D11"],
+          ["D12 (MISO)", "D12"],
+          ["D13 (SCK)", "D13"],
+          ["5V", "5V"],
+          ["GND", "GND"]
+        ]
+      }
+    },
+
+    {
+      "id": "nano_old",
+      "name": "Arduino Nano (old bootloader)",
+      "chip": "atmega328p",
+      "signature": "0x1e950f",
+      "flash_bytes": 32768,
+      "modes": {
+        "usb_bootloader": {
+          "label": "Direct USB (bootloader)",
+          "options": { "programmer": "arduino", "baud": 57600, "extra": ["-D"] }
+        },
+        "isp_uno": {
+          "label": "UNO as ISP programmer",
+          "erases_bootloader": true,
+          "port_belongs_to": "programmer",
+          "options": { "programmer": "stk500v1", "baud": 19200, "chip_erase": true }
+        }
+      },
+      "wiring": {
+        "isp_uno": [
+          ["D10", "RESET"],
+          ["D11 (MOSI)", "D11"],
+          ["D12 (MISO)", "D12"],
+          ["D13 (SCK)", "D13"],
+          ["5V", "5V"],
+          ["GND", "GND"]
+        ]
+      }
+    },
+
+    {
+      "id": "pro_mini_328",
+      "name": "Arduino Pro Mini (ATmega328P)",
+      "chip": "atmega328p",
+      "signature": "0x1e950f",
+      "flash_bytes": 32768,
+      "notes": "Has no USB. Use ISP, or a USB-to-serial adapter for the bootloader mode.",
+      "modes": {
+        "isp_uno": {
+          "label": "UNO as ISP programmer",
+          "erases_bootloader": true,
+          "port_belongs_to": "programmer",
+          "options": { "programmer": "stk500v1", "baud": 19200, "chip_erase": true }
+        },
+        "usb_bootloader": {
+          "label": "USB-to-serial adapter (bootloader)",
+          "options": { "programmer": "arduino", "baud": 57600, "extra": ["-D"] }
+        }
+      },
+      "wiring": {
+        "isp_uno": [
+          ["D10", "RST"],
+          ["D11 (MOSI)", "D11"],
+          ["D12 (MISO)", "D12"],
+          ["D13 (SCK)", "D13"],
+          ["5V", "VCC"],
+          ["GND", "GND"]
+        ]
+      }
+    },
+
+    {
+      "id": "atmega328p_bare",
+      "name": "Bare ATmega328P chip",
+      "chip": "atmega328p",
+      "signature": "0x1e950f",
+      "flash_bytes": 32768,
+      "notes": "A chip on a breadboard has no bootloader, so ISP is the only route.",
+      "modes": {
+        "isp_uno": {
+          "label": "UNO as ISP programmer",
+          "erases_bootloader": true,
+          "port_belongs_to": "programmer",
+          "options": { "programmer": "stk500v1", "baud": 19200, "chip_erase": true }
+        }
+      },
+      "wiring": {
+        "isp_uno": [
+          ["D10", "pin 1 (RESET)"],
+          ["D11 (MOSI)", "pin 17"],
+          ["D12 (MISO)", "pin 18"],
+          ["D13 (SCK)", "pin 19"],
+          ["5V", "pin 7 (VCC)"],
+          ["GND", "pin 8 (GND)"]
+        ]
+      }
+    },
+
+    {
+      "id": "atmega168",
+      "name": "Arduino Nano / Diecimila (ATmega168)",
+      "chip": "atmega168",
+      "signature": "0x1e9406",
+      "flash_bytes": 16384,
+      "modes": {
+        "isp_uno": {
+          "label": "UNO as ISP programmer",
+          "erases_bootloader": true,
+          "port_belongs_to": "programmer",
+          "options": { "programmer": "stk500v1", "baud": 19200, "chip_erase": true }
+        },
+        "usb_bootloader": {
+          "label": "Direct USB (bootloader)",
+          "options": { "programmer": "arduino", "baud": 19200, "extra": ["-D"] }
+        }
+      },
+      "wiring": {
+        "isp_uno": [
+          ["D10", "RESET"],
+          ["D11 (MOSI)", "D11"],
+          ["D12 (MISO)", "D12"],
+          ["D13 (SCK)", "D13"],
+          ["5V", "5V"],
+          ["GND", "GND"]
+        ]
+      }
+    }
+  ]
+}

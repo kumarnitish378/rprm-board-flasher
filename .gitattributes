@@ -1,0 +1,12 @@
+* text=auto eol=lf
+
+# Batch files must keep CRLF or cmd.exe can mis-parse them.
+*.cmd text eol=crlf
+
+# Never touch these.
+*.exe  binary
+*.ttf  binary
+*.png  binary
+*.ico  binary
+*.zip  binary
+*.conf text eol=lf

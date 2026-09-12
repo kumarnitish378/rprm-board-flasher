@@ -1,0 +1,745 @@
+<title>Board Flasher Mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@500;600&display=swap">
+
+<style>
+  /* ---- Raphe brand tokens, pulled from raphe.com ---- */
+  :root{
+    --bg:#0A131A;            /* --brand-background */
+    --surface:#101C25;
+    --raised:#16242F;
+    --border:#22323F;
+    --text:#FCFCFC;          /* --white */
+    --dim:#848484;
+    --faint:#505050;
+    --accent:#01B4EA;
+    --accent-hi:#3DCBF5;
+    --mint:#00FFB2;
+    --amber:#F59E0B;
+    --danger:#EA384C;
+    --log:#060D12;
+
+    --page:#060C11;          /* review-board ground, one step under the app */
+    --grad-brand:linear-gradient(97deg,#FFFFFF 0%,var(--accent) 131%);
+
+    --f-disp:"Bebas Neue","Impact",sans-serif;
+    --f-ui:"Poppins","Segoe UI",sans-serif;
+    --f-body:"Inter","Segoe UI Variable","Segoe UI",sans-serif;
+    --f-mono:"JetBrains Mono","Cascadia Mono",Consolas,monospace;
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    background:var(--page);
+    color:var(--text);
+    font-family:var(--f-body);
+    font-size:14px;
+    line-height:1.55;
+    padding-block:40px 72px;
+    padding-left:20px;
+    padding-right:20px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .board{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:44px}
+
+  /* ---------- brief ---------- */
+  .brief{display:flex;flex-direction:column;gap:12px}
+  .eyebrow{
+    font-family:var(--f-ui);font-size:11px;font-weight:600;text-transform:uppercase;
+    letter-spacing:1.4px;color:var(--accent);
+  }
+  .brief h1{
+    font-family:var(--f-disp);font-size:clamp(34px,6vw,52px);font-weight:400;
+    letter-spacing:2px;text-transform:uppercase;margin:0;line-height:1;
+    background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;
+    color:transparent;text-wrap:balance;
+  }
+  .brief p{margin:0;max-width:62ch;color:var(--dim);font-size:14.5px}
+  .brief p strong{color:var(--text);font-weight:500}
+
+  /* ---------- token strip ---------- */
+  .tokens{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
+    gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;
+    overflow:hidden;
+  }
+  .tok{background:var(--surface);padding:12px 14px;display:flex;gap:10px;align-items:center}
+  .chip{width:26px;height:26px;border-radius:6px;flex:none;border:1px solid rgba(252,252,252,.14)}
+  .tok-txt{display:flex;flex-direction:column;min-width:0}
+  .tok-name{font-family:var(--f-ui);font-size:10.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+  .tok-hex{font-family:var(--f-mono);font-size:10.5px;color:var(--dim)}
+  .tok-hex.real{color:var(--accent)}
+
+  /* ---------- state framing ---------- */
+  .state{display:flex;flex-direction:column;gap:12px}
+  .state-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .state-name{
+    font-family:var(--f-ui);font-size:12px;font-weight:600;letter-spacing:1.4px;
+    text-transform:uppercase;color:var(--text);
+  }
+  .state-note{font-size:12.5px;color:var(--dim)}
+
+  /* =========================================================
+     THE APP WINDOW  — 980px wide at 100%
+     ========================================================= */
+  .win{
+    max-width:980px;background:var(--bg);border:1px solid var(--border);
+    border-radius:12px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.5);
+  }
+
+  /* header 64px */
+  .win-head{
+    height:64px;background:var(--surface);border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:12px;padding-inline:24px;
+  }
+  .mark{width:32px;height:32px;flex:none}
+  .wordmark{
+    font-family:var(--f-disp);font-size:20px;letter-spacing:2px;text-transform:uppercase;
+    background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent;
+    white-space:nowrap;
+  }
+  .vpill{
+    font-size:11px;color:var(--dim);background:var(--raised);border-radius:10px;
+    padding:3px 9px;font-family:var(--f-mono);
+  }
+  .head-sp{flex:1}
+  .ibtn{
+    width:32px;height:32px;border-radius:8px;border:0;background:transparent;color:var(--dim);
+    display:grid;place-items:center;cursor:default;
+  }
+
+  /* body */
+  .win-body{padding:24px;display:flex;flex-direction:column;gap:16px}
+
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    padding:20px;display:flex;flex-direction:column;gap:16px;
+  }
+  .card-head{display:flex;align-items:center;gap:10px}
+  .badge{
+    width:24px;height:24px;border-radius:50%;background:var(--accent);color:#04222E;
+    font-family:var(--f-ui);font-size:12px;font-weight:600;display:grid;place-items:center;flex:none;
+  }
+  .step{
+    font-family:var(--f-ui);font-size:11px;font-weight:600;letter-spacing:1.2px;
+    text-transform:uppercase;color:var(--dim);
+  }
+
+  .flabel{font-size:11px;font-weight:500;color:var(--dim);margin-bottom:6px;display:block}
+
+  /* segmented control */
+  .seg{
+    width:260px;max-width:100%;height:32px;background:var(--raised);border-radius:8px;
+    padding:3px;display:grid;grid-template-columns:1fr 1fr;gap:3px;
+  }
+  .seg span{
+    border-radius:6px;display:grid;place-items:center;font-size:12px;color:var(--dim);
+  }
+  .seg span.on{background:var(--accent);color:#04222E;font-weight:600;border:.5px solid var(--accent)}
+
+  /* drop zone */
+  .drop{
+    border:1.5px dashed var(--border);border-radius:10px;min-height:88px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+    padding:14px;text-align:center;
+  }
+  .drop .t1{font-size:13px}
+  .drop .t2{font-size:11px;color:var(--faint)}
+
+  /* file chip */
+  .fchip{
+    background:var(--raised);border-radius:10px;min-height:56px;padding:12px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .fchip .ico{color:var(--accent);flex:none;display:grid;place-items:center}
+  .fchip .meta{display:flex;flex-direction:column;min-width:0;flex:1}
+  .fchip .n{font-size:13px;font-weight:500}
+  .fchip .s{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+  .fchip .x{color:var(--faint);font-size:15px;flex:none;padding-inline:4px}
+
+  /* inputs */
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .sel{
+    height:38px;background:var(--raised);border:1px solid var(--border);border-radius:8px;
+    display:flex;align-items:center;gap:8px;padding-inline:12px;font-size:13px;
+  }
+  .sel .car{margin-left:auto;color:var(--dim);font-size:10px}
+  .sel.focus{border:.5px solid var(--accent);box-shadow:0 0 0 3px rgba(1,180,234,.16)}
+  .link{font-size:11px;color:var(--accent);margin-top:6px;display:inline-block}
+
+  .portrow{display:flex;gap:8px;align-items:stretch}
+  .portrow .sel{flex:1;min-width:0}
+  .sqbtn{
+    width:38px;height:38px;flex:none;background:var(--raised);border:1px solid var(--border);
+    border-radius:8px;display:grid;place-items:center;color:var(--dim);
+  }
+  .btn2{
+    height:38px;flex:none;background:var(--raised);border:1px solid var(--border);border-radius:8px;
+    padding-inline:16px;display:grid;place-items:center;font-family:var(--f-ui);
+    font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;
+  }
+  .detected{font-size:11px;color:var(--mint);margin-top:6px}
+
+  /* warning strip */
+  .warn{
+    background:rgba(245,158,11,.10);border-left:3px solid var(--amber);border-radius:8px;
+    padding:12px 14px;display:flex;gap:10px;align-items:center;
+  }
+  .warn .wi{color:var(--amber);flex:none;font-size:15px;line-height:1}
+  .warn .wt{font-size:12px;color:var(--text);flex:1}
+  .warn .wc{font-size:12px;color:var(--dim);display:flex;align-items:center;gap:7px;white-space:nowrap;flex:none}
+  .box{
+    width:15px;height:15px;border-radius:4px;border:1px solid var(--border);background:var(--raised);
+    display:grid;place-items:center;flex:none;
+  }
+  .box.on{background:var(--accent);border-color:var(--accent);color:#04222E;font-size:10px;font-weight:700}
+
+  /* primary action */
+  .act{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .flash{
+    width:280px;max-width:100%;height:52px;border-radius:10px;border:0;
+    background:linear-gradient(135deg,var(--accent),#0193C4);color:#04222E;
+    font-family:var(--f-ui);font-size:15px;font-weight:600;letter-spacing:.4px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    box-shadow:0 4px 16px rgba(1,180,234,.30);
+  }
+  .flash.off{background:var(--raised);color:var(--faint);box-shadow:none}
+  .flash.cancel{background:transparent;border:1.5px solid var(--danger);color:var(--danger);box-shadow:none}
+  .hint{font-size:11px;color:var(--amber)}
+
+  /* progress */
+  .prog{width:100%;display:flex;flex-direction:column;gap:8px}
+  .track{height:8px;border-radius:4px;background:var(--raised);overflow:hidden}
+  .fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#FFFFFF,var(--accent))}
+  .prow{display:flex;justify-content:space-between;font-size:12px}
+  .prow .r{font-family:var(--f-mono);color:var(--dim);font-variant-numeric:tabular-nums}
+
+  /* result banner */
+  .res{border-radius:10px;min-height:56px;padding:14px;display:flex;align-items:center;gap:12px;width:100%}
+  .res.ok{background:rgba(0,255,178,.09);border-left:3px solid var(--mint)}
+  .res.bad{background:rgba(234,56,76,.10);border-left:3px solid var(--danger)}
+  .res .dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:12px;font-weight:700}
+  .res.ok .dot{background:var(--mint);color:#04221A}
+  .res.bad .dot{background:var(--danger);color:#fff}
+  .res .rt{display:flex;flex-direction:column;flex:1;min-width:0}
+  .res .rt b{font-size:13px;font-weight:600}
+  .res .rt span{font-size:11px;color:var(--dim)}
+  .res .rl{font-size:11px;color:var(--accent);white-space:nowrap;flex:none}
+
+  /* details */
+  .det{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px}
+  .det .dl{font-size:12px;color:var(--accent)}
+  .btn3{
+    height:30px;padding-inline:14px;border-radius:8px;border:1px solid var(--border);
+    background:transparent;color:var(--dim);font-family:var(--f-ui);font-size:12px;
+    display:grid;place-items:center;
+  }
+  .btn3.live{color:var(--text)}
+
+  .logbox{
+    background:var(--log);border:1px solid var(--border);border-radius:8px;padding:12px;
+    font-family:var(--f-mono);font-size:12px;line-height:1.5;color:var(--dim);
+    overflow-x:auto;white-space:pre;
+  }
+  .logbox .cmd{color:var(--faint)}
+  .logbox .bar{color:var(--accent)}
+  .logbox .ok{color:var(--mint)}
+  .logbox .err{color:var(--danger)}
+
+  /* status bar */
+  .win-foot{
+    height:32px;background:var(--surface);border-top:1px solid var(--border);
+    display:flex;align-items:center;padding-inline:24px;gap:12px;
+  }
+  .credit{font-size:11px;color:var(--faint);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .status{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:7px;flex:none}
+  .sdot{width:8px;height:8px;border-radius:50%;background:var(--faint);flex:none}
+  .sdot.run{background:var(--accent);animation:pulse 1.3s ease-in-out infinite}
+  .sdot.ok{background:var(--mint)}
+  .sdot.bad{background:var(--danger)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  /* ---------- modal mock ---------- */
+  .modal{
+    max-width:560px;background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5);
+  }
+  .modal-head{
+    padding:18px 20px;border-bottom:1px solid var(--border);
+    font-family:var(--f-ui);font-size:14px;font-weight:600;
+  }
+  .modal-body{padding:20px;display:flex;flex-direction:column;gap:16px}
+  .pins{width:100%;border-collapse:collapse;font-size:13px}
+  .pins th{
+    text-align:left;font-family:var(--f-ui);font-size:10.5px;font-weight:600;letter-spacing:1px;
+    text-transform:uppercase;color:var(--dim);padding:0 0 8px;border-bottom:1px solid var(--border);
+  }
+  .pins td{padding:9px 0;border-bottom:1px solid var(--border);font-family:var(--f-mono);font-size:12.5px}
+  .pins td.to{color:var(--accent)}
+  .pins tr:last-child td{border-bottom:0}
+
+  @media (max-width:620px){
+    .row2{grid-template-columns:1fr}
+    .portrow{flex-wrap:wrap}
+    .portrow .sel{flex-basis:100%}
+    .warn{flex-wrap:wrap}
+    .win-body{padding:16px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+
+<div class="board">
+
+  <header class="brief">
+    <div class="eyebrow">Raphe mPhibr &middot; Nitish Sharma</div>
+    <h1>Board Flasher UI</h1>
+    <p>Every screen state of the v1 window at <strong>980&times;720</strong>, built with the palette pulled
+      from <strong>raphe.com</strong>. This is the reference for the PySide6 build &mdash; the numbers in
+      <strong>UI_SPEC.md</strong> match what you see here.</p>
+  </header>
+
+  <section class="tokens">
+    <div class="tok"><span class="chip" style="background:#0A131A"></span><span class="tok-txt"><span class="tok-name">bg</span><span class="tok-hex real">#0A131A</span></span></div>
+    <div class="tok"><span class="chip" style="background:#101C25"></span><span class="tok-txt"><span class="tok-name">surface</span><span class="tok-hex">#101C25</span></span></div>
+    <div class="tok"><span class="chip" style="background:#16242F"></span><span class="tok-txt"><span class="tok-name">raised</span><span class="tok-hex">#16242F</span></span></div>
+    <div class="tok"><span class="chip" style="background:#01B4EA"></span><span class="tok-txt"><span class="tok-name">accent</span><span class="tok-hex real">#01B4EA</span></span></div>
+    <div class="tok"><span class="chip" style="background:#00FFB2"></span><span class="tok-txt"><span class="tok-name">success</span><span class="tok-hex real">#00FFB2</span></span></div>
+    <div class="tok"><span class="chip" style="background:#EA384C"></span><span class="tok-txt"><span class="tok-name">danger</span><span class="tok-hex real">#EA384C</span></span></div>
+    <div class="tok"><span class="chip" style="background:#F59E0B"></span><span class="tok-txt"><span class="tok-name">warning</span><span class="tok-hex">#F59E0B</span></span></div>
+    <div class="tok"><span class="chip" style="background:#848484"></span><span class="tok-txt"><span class="tok-name">dim</span><span class="tok-hex real">#848484</span></span></div>
+  </section>
+
+  <!-- ============ STATE 1 : IDLE ============ -->
+  <section class="state">
+    <div class="state-head">
+      <span class="state-name">1 &middot; Idle</span>
+      <span class="state-note">Nothing chosen. The button is dead and says why.</span>
+    </div>
+    <div class="win">
+      <div class="win-head">
+        <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+          <g fill="none" stroke="#22323F" stroke-width="3.2" stroke-linecap="round">
+            <rect x="16" y="16" width="32" height="32" rx="7"/>
+            <path d="M25 16V9M39 16V9M25 55v-7M39 55v-7M16 25H9M16 39H9M55 25h-7M55 39h-7"/>
+          </g>
+          <path d="M37 20 L26 34h7l-6 11 12-15h-7z" fill="none" stroke="#01B4EA" stroke-width="3" stroke-linejoin="round"/>
+        </svg>
+        <span class="wordmark">Raphe Board Flasher</span>
+        <span class="vpill">v1.0.0</span>
+        <span class="head-sp"></span>
+        <span class="ibtn">&#9881;</span><span class="ibtn">?</span>
+      </div>
+      <div class="win-body">
+
+        <div class="card">
+          <div class="card-head"><span class="badge">1</span><span class="step">Firmware</span></div>
+          <div class="seg"><span>From library</span><span class="on">From file</span></div>
+          <div class="drop">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#848484" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 15V3m0 12-4-4m4 4 4-4"/><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/>
+            </svg>
+            <span class="t1">Drag a .hex or .bin file here</span>
+            <span class="t2">or</span>
+            <span class="btn2" style="height:32px;font-size:12px;margin-top:4px">Browse&hellip;</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">2</span><span class="step">Target</span></div>
+          <div class="row2">
+            <div>
+              <span class="flabel">Board</span>
+              <div class="sel">Arduino Mega 2560<span class="car">&#9660;</span></div>
+            </div>
+            <div>
+              <span class="flabel">Upload method</span>
+              <div class="sel">UNO as ISP programmer<span class="car">&#9660;</span></div>
+              <span class="link">&#9432; Show wiring</span>
+            </div>
+          </div>
+          <div>
+            <span class="flabel">Port</span>
+            <div class="portrow">
+              <div class="sel" style="color:var(--faint)">No serial ports found<span class="car">&#9660;</span></div>
+              <span class="sqbtn">&#8635;</span>
+              <span class="btn2" style="color:var(--faint)">Detect board</span>
+            </div>
+          </div>
+          <div class="warn">
+            <span class="wi">&#9888;</span>
+            <span class="wt">ISP flashing erases the bootloader. This board won't accept USB uploads until it's re&#8209;burned.</span>
+            <span class="wc"><span class="box"></span>I understand</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">3</span><span class="step">Flash</span></div>
+          <div class="act">
+            <div class="flash off">&#9889; FLASH BOARD</div>
+            <span class="hint">Select a firmware file to continue</span>
+          </div>
+        </div>
+
+        <div class="det">
+          <span class="dl">&#9656; Show details</span>
+          <span class="btn3">Save log</span>
+        </div>
+      </div>
+      <div class="win-foot">
+        <span class="credit">Raphe mPhibr &middot; Nitish Sharma</span>
+        <span class="status"><span class="sdot"></span>Ready</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATE 2 : READY ============ -->
+  <section class="state">
+    <div class="state-head">
+      <span class="state-name">2 &middot; Ready</span>
+      <span class="state-note">File loaded, chip detected, warning acknowledged. Button goes live.</span>
+    </div>
+    <div class="win">
+      <div class="win-head">
+        <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+          <g fill="none" stroke="#22323F" stroke-width="3.2" stroke-linecap="round">
+            <rect x="16" y="16" width="32" height="32" rx="7"/>
+            <path d="M25 16V9M39 16V9M25 55v-7M39 55v-7M16 25H9M16 39H9M55 25h-7M55 39h-7"/>
+          </g>
+          <path d="M37 20 L26 34h7l-6 11 12-15h-7z" fill="none" stroke="#01B4EA" stroke-width="3" stroke-linejoin="round"/>
+        </svg>
+        <span class="wordmark">Raphe Board Flasher</span>
+        <span class="vpill">v1.0.0</span>
+        <span class="head-sp"></span>
+        <span class="ibtn">&#9881;</span><span class="ibtn">?</span>
+      </div>
+      <div class="win-body">
+
+        <div class="card">
+          <div class="card-head"><span class="badge">1</span><span class="step">Firmware</span></div>
+          <div class="seg"><span>From library</span><span class="on">From file</span></div>
+          <div class="fchip">
+            <span class="ico">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>
+              </svg>
+            </span>
+            <span class="meta">
+              <span class="n">mphibr_mainboard_v2.3.hex</span>
+              <span class="s">248 KB &middot; CRC32 9A3F21E8 &middot; Intel HEX &middot; 94% of 256 KB flash</span>
+            </span>
+            <span class="x">&#10005;</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">2</span><span class="step">Target</span></div>
+          <div class="row2">
+            <div>
+              <span class="flabel">Board</span>
+              <div class="sel">Arduino Mega 2560<span class="car">&#9660;</span></div>
+            </div>
+            <div>
+              <span class="flabel">Upload method</span>
+              <div class="sel">UNO as ISP programmer<span class="car">&#9660;</span></div>
+              <span class="link">&#9432; Show wiring</span>
+            </div>
+          </div>
+          <div>
+            <span class="flabel">Port</span>
+            <div class="portrow">
+              <div class="sel focus">COM5 &mdash; Arduino Uno<span class="car">&#9660;</span></div>
+              <span class="sqbtn">&#8635;</span>
+              <span class="btn2">Detect board</span>
+            </div>
+            <div class="detected">&#10003; Detected ATmega2560 &mdash; matches selected board</div>
+          </div>
+          <div class="warn">
+            <span class="wi">&#9888;</span>
+            <span class="wt">ISP flashing erases the bootloader. This board won't accept USB uploads until it's re&#8209;burned.</span>
+            <span class="wc"><span class="box on">&#10003;</span>I understand</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">3</span><span class="step">Flash</span></div>
+          <div class="act">
+            <div class="flash">&#9889; FLASH BOARD</div>
+          </div>
+        </div>
+
+        <div class="det">
+          <span class="dl">&#9656; Show details</span>
+          <span class="btn3">Save log</span>
+        </div>
+      </div>
+      <div class="win-foot">
+        <span class="credit">Raphe mPhibr &middot; Nitish Sharma</span>
+        <span class="status"><span class="sdot"></span>Ready</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATE 3 : FLASHING ============ -->
+  <section class="state">
+    <div class="state-head">
+      <span class="state-name">3 &middot; Flashing</span>
+      <span class="state-note">Write maps to 0&ndash;80% of the bar, verify to 80&ndash;100%, so it reads as one pass.</span>
+    </div>
+    <div class="win">
+      <div class="win-head">
+        <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+          <g fill="none" stroke="#22323F" stroke-width="3.2" stroke-linecap="round">
+            <rect x="16" y="16" width="32" height="32" rx="7"/>
+            <path d="M25 16V9M39 16V9M25 55v-7M39 55v-7M16 25H9M16 39H9M55 25h-7M55 39h-7"/>
+          </g>
+          <path d="M37 20 L26 34h7l-6 11 12-15h-7z" fill="none" stroke="#01B4EA" stroke-width="3" stroke-linejoin="round"/>
+        </svg>
+        <span class="wordmark">Raphe Board Flasher</span>
+        <span class="vpill">v1.0.0</span>
+        <span class="head-sp"></span>
+        <span class="ibtn">&#9881;</span><span class="ibtn">?</span>
+      </div>
+      <div class="win-body">
+
+        <div class="card" style="opacity:.55">
+          <div class="card-head"><span class="badge">1</span><span class="step">Firmware</span></div>
+          <div class="fchip">
+            <span class="ico">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>
+              </svg>
+            </span>
+            <span class="meta">
+              <span class="n">mphibr_mainboard_v2.3.hex</span>
+              <span class="s">248 KB &middot; CRC32 9A3F21E8 &middot; Intel HEX</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="card" style="opacity:.55">
+          <div class="card-head"><span class="badge">2</span><span class="step">Target</span></div>
+          <div class="row2">
+            <div><span class="flabel">Board</span><div class="sel">Arduino Mega 2560<span class="car">&#9660;</span></div></div>
+            <div><span class="flabel">Upload method</span><div class="sel">UNO as ISP programmer<span class="car">&#9660;</span></div></div>
+          </div>
+          <div><span class="flabel">Port</span><div class="sel">COM5 &mdash; Arduino Uno<span class="car">&#9660;</span></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">3</span><span class="step">Flash</span></div>
+          <div class="act">
+            <div class="flash cancel">Cancel</div>
+            <div class="prog">
+              <div class="track"><div class="fill" style="width:62%"></div></div>
+              <div class="prow"><span>Writing 248 KB to flash&hellip;</span><span class="r">62%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="det">
+          <span class="dl">&#9662; Hide details</span>
+          <span class="btn3 live">Save log</span>
+        </div>
+        <div class="logbox"><span class="cmd">$ avrdude -C tools\avr\avrdude.conf -p atmega2560 -c stk500v1 -P COM5 -b 19200 -U flash:w:mphibr_mainboard_v2.3.hex:i</span>
+
+Processing -U flash:w:mphibr_mainboard_v2.3.hex:i
+Reading 253952 bytes for flash from input file mphibr_mainboard_v2.3.hex
+Writing 253952 bytes to flash
+<span class="bar">Writing | ##############################                     | 62% 24.8 s</span></div>
+      </div>
+      <div class="win-foot">
+        <span class="credit">Raphe mPhibr &middot; Nitish Sharma</span>
+        <span class="status"><span class="sdot run"></span>Flashing&hellip;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATE 4 : SUCCESS ============ -->
+  <section class="state">
+    <div class="state-head">
+      <span class="state-name">4 &middot; Success</span>
+      <span class="state-note">The verified line from avrdude, restated in a sentence an operator can read.</span>
+    </div>
+    <div class="win">
+      <div class="win-head">
+        <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+          <g fill="none" stroke="#22323F" stroke-width="3.2" stroke-linecap="round">
+            <rect x="16" y="16" width="32" height="32" rx="7"/>
+            <path d="M25 16V9M39 16V9M25 55v-7M39 55v-7M16 25H9M16 39H9M55 25h-7M55 39h-7"/>
+          </g>
+          <path d="M37 20 L26 34h7l-6 11 12-15h-7z" fill="none" stroke="#01B4EA" stroke-width="3" stroke-linejoin="round"/>
+        </svg>
+        <span class="wordmark">Raphe Board Flasher</span>
+        <span class="vpill">v1.0.0</span>
+        <span class="head-sp"></span>
+        <span class="ibtn">&#9881;</span><span class="ibtn">?</span>
+      </div>
+      <div class="win-body">
+
+        <div class="card">
+          <div class="card-head"><span class="badge">1</span><span class="step">Firmware</span></div>
+          <div class="fchip">
+            <span class="ico">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>
+              </svg>
+            </span>
+            <span class="meta">
+              <span class="n">mphibr_mainboard_v2.3.hex</span>
+              <span class="s">248 KB &middot; CRC32 9A3F21E8 &middot; Intel HEX</span>
+            </span>
+            <span class="x">&#10005;</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">2</span><span class="step">Target</span></div>
+          <div class="row2">
+            <div><span class="flabel">Board</span><div class="sel">Arduino Mega 2560<span class="car">&#9660;</span></div></div>
+            <div><span class="flabel">Upload method</span><div class="sel">UNO as ISP programmer<span class="car">&#9660;</span></div></div>
+          </div>
+          <div><span class="flabel">Port</span><div class="sel">COM5 &mdash; Arduino Uno<span class="car">&#9660;</span></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">3</span><span class="step">Flash</span></div>
+          <div class="act">
+            <div class="flash">&#9889; FLASH BOARD</div>
+            <div class="res ok">
+              <span class="dot">&#10003;</span>
+              <span class="rt">
+                <b>Flash complete</b>
+                <span>248 KB written and verified in 41.2 s &middot; you can unplug the board</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="det">
+          <span class="dl">&#9656; Show details</span>
+          <span class="btn3 live">Save log</span>
+        </div>
+      </div>
+      <div class="win-foot">
+        <span class="credit">Raphe mPhibr &middot; Nitish Sharma</span>
+        <span class="status"><span class="sdot ok"></span>Done</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATE 5 : ERROR ============ -->
+  <section class="state">
+    <div class="state-head">
+      <span class="state-name">5 &middot; Error</span>
+      <span class="state-note">Headline is the cause, sub-line is the fix. The raw avrdude text stays in the log.</span>
+    </div>
+    <div class="win">
+      <div class="win-head">
+        <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+          <g fill="none" stroke="#22323F" stroke-width="3.2" stroke-linecap="round">
+            <rect x="16" y="16" width="32" height="32" rx="7"/>
+            <path d="M25 16V9M39 16V9M25 55v-7M39 55v-7M16 25H9M16 39H9M55 25h-7M55 39h-7"/>
+          </g>
+          <path d="M37 20 L26 34h7l-6 11 12-15h-7z" fill="none" stroke="#01B4EA" stroke-width="3" stroke-linejoin="round"/>
+        </svg>
+        <span class="wordmark">Raphe Board Flasher</span>
+        <span class="vpill">v1.0.0</span>
+        <span class="head-sp"></span>
+        <span class="ibtn">&#9881;</span><span class="ibtn">?</span>
+      </div>
+      <div class="win-body">
+
+        <div class="card">
+          <div class="card-head"><span class="badge">1</span><span class="step">Firmware</span></div>
+          <div class="fchip">
+            <span class="ico">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>
+              </svg>
+            </span>
+            <span class="meta">
+              <span class="n">mphibr_mainboard_v2.3.hex</span>
+              <span class="s">248 KB &middot; CRC32 9A3F21E8 &middot; Intel HEX</span>
+            </span>
+            <span class="x">&#10005;</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">2</span><span class="step">Target</span></div>
+          <div class="row2">
+            <div><span class="flabel">Board</span><div class="sel">Arduino Mega 2560<span class="car">&#9660;</span></div></div>
+            <div><span class="flabel">Upload method</span><div class="sel">UNO as ISP programmer<span class="car">&#9660;</span></div><span class="link">&#9432; Show wiring</span></div>
+          </div>
+          <div><span class="flabel">Port</span><div class="sel">COM5 &mdash; Arduino Uno<span class="car">&#9660;</span></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="badge">3</span><span class="step">Flash</span></div>
+          <div class="act">
+            <div class="flash">&#9889; TRY AGAIN</div>
+            <div class="res bad">
+              <span class="dot">&#10005;</span>
+              <span class="rt">
+                <b>No reply from the UNO</b>
+                <span>Check the ArduinoISP sketch is loaded and a 10&nbsp;&micro;F capacitor sits between RESET and GND.</span>
+              </span>
+              <span class="rl">View log &rarr;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="det">
+          <span class="dl">&#9662; Hide details</span>
+          <span class="btn3 live">Save log</span>
+        </div>
+        <div class="logbox"><span class="cmd">$ avrdude -C tools\avr\avrdude.conf -p atmega2560 -c stk500v1 -P COM5 -b 19200 -U flash:w:mphibr_mainboard_v2.3.hex:i</span>
+
+<span class="err">Error: programmer is not responding</span>
+<span class="err">Error: stk500_recv(): programmer is not responding</span>
+<span class="err">Error: unable to open programmer stk500v1 on port COM5</span>
+
+Avrdude done.  Thank you.</div>
+      </div>
+      <div class="win-foot">
+        <span class="credit">Raphe mPhibr &middot; Nitish Sharma</span>
+        <span class="status"><span class="sdot bad"></span>Failed</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MODAL ============ -->
+  <section class="state">
+    <div class="state-head">
+      <span class="state-name">Modal &middot; Wiring help</span>
+      <span class="state-note">Pin map comes from the board's JSON profile, so a new board brings its own.</span>
+    </div>
+    <div class="modal">
+      <div class="modal-head">Wiring the UNO as an ISP programmer</div>
+      <div class="modal-body">
+        <table class="pins">
+          <thead><tr><th>From &mdash; Arduino UNO</th><th>To &mdash; Mega 2560</th></tr></thead>
+          <tbody>
+            <tr><td>D10</td><td class="to">RESET</td></tr>
+            <tr><td>D11 &nbsp;(MOSI)</td><td class="to">D51</td></tr>
+            <tr><td>D12 &nbsp;(MISO)</td><td class="to">D50</td></tr>
+            <tr><td>D13 &nbsp;(SCK)</td><td class="to">D52</td></tr>
+            <tr><td>5V</td><td class="to">5V</td></tr>
+            <tr><td>GND</td><td class="to">GND</td></tr>
+          </tbody>
+        </table>
+        <div class="warn">
+          <span class="wi">&#9888;</span>
+          <span class="wt">Upload the ArduinoISP sketch to the UNO first, then fit a 10&nbsp;&micro;F capacitor between the UNO's RESET and GND. Without it the UNO resets itself and flashing fails.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
