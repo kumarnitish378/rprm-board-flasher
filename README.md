@@ -225,6 +225,23 @@ No rebuild. `avrdude -p ?` lists all 172 supported AVR parts.
 
 ---
 
+## Third-party components
+
+| Component | Version | Licence | Source |
+|---|---|---|---|
+| avrdude | 8.0-arduino.1 | GPL | [avrdudes/avrdude](https://github.com/avrdudes/avrdude) — see `tools/avr/README-avrdude.txt` |
+| PySide6 (Qt) | 6.11 | LGPL v3 | dynamically linked, unmodified |
+| pyserial | 3.5 | BSD | |
+| Bebas Neue, Poppins | — | SIL OFL | licences ship beside the fonts |
+
+avrdude is invoked as a separate process, not linked, so it stays under the GPL
+while this project's own code is not placed under it.
+
+**This repository has no LICENSE file**, which means all rights reserved by
+default. Add one if it is meant to be reused.
+
+---
+
 ## Notes for whoever picks this up
 
 - **avrdude verifies by default.** `-V` *disables* it. The "verify after write"
